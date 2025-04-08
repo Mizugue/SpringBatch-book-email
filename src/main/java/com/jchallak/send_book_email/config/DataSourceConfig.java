@@ -14,26 +14,23 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+
     @Primary
-    @Bean
+    @Bean(name = "appDataSource")
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource springDS(){
+    public DataSource appDS(){
         return DataSourceBuilder.create().build();
     }
 
 
-    @Bean
+    @Bean(name = "batchDataSource")
     @ConfigurationProperties(prefix = "app.datasource")
-    public DataSource appDS(){
+    public DataSource springDS(){
         return DataSourceBuilder.create().build();
     }
 
     @Bean
     public PlatformTransactionManager transactionManagerApp(@Qualifier("appDS") DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
-
     }
-
-
-
 }
